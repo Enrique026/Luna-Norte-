@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luna Norte — Para quienes avanzan en su propia dirección.</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --negro: #0a0a0a;
+    --carbon: #1c1c1c;
+    --tierra: #2e2a26;
+    --arena: #f5f0e8;
+    --beige: #e8dfc8;
+    --ambar: #d4a853;
+    --azul: #4a8fa8;
+    --gris: #888;
+    --gris-clar: #ccc;
+    --blanco: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--negro);
+    color: var(--arena);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 400;
+    letter-spacing: 0.22em; color: var(--arena);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gris); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--arena); }
+  .nav-cta {
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--negro) !important; background: var(--ambar);
+    padding: 0.45rem 1.1rem; border-radius: 0;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; color: var(--negro) !important; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 1px; background: var(--arena); margin: 5px 0; transition: all 0.3s; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 2rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(74,143,168,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(212,168,83,0.06) 0%, transparent 50%);
+  }
+  .hero-compass {
+    position: absolute; right: -5vw; top: 50%; transform: translateY(-50%);
+    width: min(55vw, 600px); height: min(55vw, 600px);
+    opacity: 0.04;
+  }
+  .hero-content { position: relative; max-width: 820px; }
+  .hero-eyebrow {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ambar); margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 300; line-height: 0.92;
+    letter-spacing: -0.01em;
+    color: var(--arena);
+    margin-bottom: 2rem;
+  }
+  .hero-title em { font-style: italic; color: var(--ambar); }
+  .hero-sub {
+    font-size: 0.85rem; color: var(--gris); letter-spacing: 0.04em;
+    max-width: 420px; line-height: 1.9; margin-bottom: 3rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--negro); background: var(--ambar);
+    padding: 0.9rem 2rem; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gris); border-bottom: 0.5px solid var(--gris);
+    padding-bottom: 2px; text-decoration: none; transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--arena); border-color: var(--arena); }
+  .hero-scroll {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.6rem; letter-spacing: 0.15em; color: var(--tierra);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 0.5px; height: 40px; background: linear-gradient(to bottom, var(--tierra), transparent);
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollpulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  /* ─── MANIFIESTO ─── */
+  .manifesto {
+    padding: 8rem 2rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start;
+  }
+  .manifesto-label {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ambar); padding-top: 0.6rem;
+    position: sticky; top: 7rem;
+  }
+  .manifesto-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    font-weight: 300; line-height: 1.75; color: var(--gris-clar);
+  }
+  .manifesto-text strong { color: var(--arena); font-weight: 400; }
+  .manifesto-text em { color: var(--ambar); font-style: italic; }
+
+  /* ─── DIVIDER ─── */
+  .divider-line {
+    width: 100%; height: 0.5px;
+    background: linear-gradient(to right, transparent, var(--tierra) 30%, var(--tierra) 70%, transparent);
+  }
+
+  /* ─── JOURNAL ─── */
+  .journal { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 3rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 300;
+    color: var(--arena); letter-spacing: 0.02em;
+  }
+  .section-link {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gris); text-decoration: none; border-bottom: 0.5px solid var(--tierra);
+    padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+  }
+  .section-link:hover { color: var(--ambar); border-color: var(--ambar); }
+
+  .journal-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1.5px; }
+
+  .journal-card {
+    background: var(--carbon); padding: 2rem;
+    text-decoration: none; display: block;
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .journal-card:hover { background: var(--tierra); }
+  .journal-card.featured { grid-row: span 2; padding: 2.5rem; }
+  .journal-card::before {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--ambar);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .journal-card:hover::before { transform: scaleX(1); }
+
+  .card-concept {
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ambar); margin-bottom: 1rem;
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 400;
+    color: var(--arena); line-height: 1.3; margin-bottom: 1rem;
+  }
+  .journal-card.featured .card-title { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+  .card-excerpt {
+    font-size: 0.82rem; color: var(--gris); line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .card-meta {
+    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--tierra); margin-top: auto;
+  }
+
+  /* ─── COLECCIÓN ─── */
+  .coleccion { padding: 6rem 2rem; background: var(--carbon); }
+  .coleccion-inner { max-width: 1200px; margin: 0 auto; }
+  .producto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5px; margin-top: 3rem; }
+
+  .producto-card {
+    background: var(--negro); text-decoration: none; display: block;
+    transition: background 0.3s;
+  }
+  .producto-card:hover { background: var(--tierra); }
+  .producto-img {
+    aspect-ratio: 3/4; background: var(--tierra);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .producto-placeholder {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  }
+  .producto-info { padding: 1.25rem 1.5rem; }
+  .producto-concepto {
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ambar); margin-bottom: 0.4rem;
+  }
+  .producto-nombre {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 400; color: var(--arena);
+    margin-bottom: 0.25rem;
+  }
+  .producto-precio {
+    font-size: 0.8rem; color: var(--gris); letter-spacing: 0.04em;
+  }
+  .producto-accion {
+    font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gris); padding: 0.5rem 1.5rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .producto-accion span { border-bottom: 0.5px solid var(--tierra); padding-bottom: 1px; }
+
+  /* ─── PILARES ─── */
+  .pilares { padding: 8rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .pilares-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin-top: 4rem; }
+  .pilar {
+    padding: 3rem; border: 0.5px solid var(--tierra);
+    margin: -0.5px;
+  }
+  .pilar-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 300; color: var(--tierra);
+    line-height: 1; margin-bottom: 1.5rem;
+  }
+  .pilar-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 400; color: var(--arena);
+    margin-bottom: 0.75rem;
+  }
+  .pilar-texto { font-size: 0.82rem; color: var(--gris); line-height: 1.85; }
+
+  /* ─── QUOTE ─── */
+  .quote-section {
+    padding: 8rem 2rem;
+    background: var(--tierra);
+    text-align: center;
+  }
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem; color: var(--ambar); line-height: 0.5;
+    opacity: 0.4; margin-bottom: 2rem; display: block;
+  }
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 4vw, 2.8rem);
+    font-weight: 300; font-style: italic;
+    color: var(--arena); max-width: 800px; margin: 0 auto 2rem;
+    line-height: 1.5;
+  }
+  .quote-attr {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ambar);
+  }
+
+  /* ─── LISTA DE ESPERA ─── */
+  .espera { padding: 8rem 2rem; text-align: center; }
+  .espera-inner { max-width: 560px; margin: 0 auto; }
+  .espera-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 300;
+    color: var(--arena); margin-bottom: 1rem; line-height: 1.2;
+  }
+  .espera-sub {
+    font-size: 0.82rem; color: var(--gris); line-height: 1.9;
+    margin-bottom: 2.5rem;
+  }
+  .espera-form { display: flex; gap: 0; width: 100%; }
+  .espera-input {
+    flex: 1; background: var(--carbon); border: 0.5px solid var(--tierra);
+    color: var(--arena); padding: 0.9rem 1.25rem;
+    font-family: 'Inter', sans-serif; font-size: 0.82rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .espera-input::placeholder { color: var(--tierra); }
+  .espera-input:focus { border-color: var(--ambar); }
+  .espera-btn {
+    background: var(--ambar); color: var(--negro); border: none;
+    padding: 0.9rem 1.5rem; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: opacity 0.2s; white-space: nowrap;
+  }
+  .espera-btn:hover { opacity: 0.85; }
+  .espera-note {
+    font-size: 0.65rem; color: var(--tierra); margin-top: 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--carbon); padding: 4rem 2rem 2rem;
+    border-top: 0.5px solid var(--tierra);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400; letter-spacing: 0.15em;
+    color: var(--arena); margin-bottom: 0.75rem;
+  }
+  .footer-brand-tagline {
+    font-size: 0.75rem; color: var(--gris); line-height: 1.8;
+    max-width: 260px;
+  }
+  .footer-col-title {
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ambar); margin-bottom: 1.25rem;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.6rem; }
+  .footer-links a {
+    font-size: 0.8rem; color: var(--gris); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--arena); }
+  .footer-bottom {
+    border-top: 0.5px solid var(--tierra); padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy { font-size: 0.65rem; color: var(--tierra); letter-spacing: 0.04em; }
+  .footer-social { display: flex; gap: 1.5rem; }
+  .footer-social a {
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--tierra); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-social a:hover { color: var(--ambar); }
+
+  /* ─── MOBILE MENU ─── */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 99;
+    background: var(--negro); padding: 6rem 2rem 2rem;
+    flex-direction: column; gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; color: var(--arena);
+    text-decoration: none; border-bottom: 0.5px solid var(--tierra);
+    padding-bottom: 1rem; transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--ambar); }
+
+  /* ─── RESPONSIVE ─── */
+
+  /* ════════════════════════════════════════════════════════
+     RESPONSIVE COMPLETO — todos los dispositivos
+     ════════════════════════════════════════════════════ */
+
+  /* ── LAPTOP / DESKTOP grande (1280px+) ─────────────────
+     Todo funciona bien. Solo ajustes finos de espaciado.  */
+  @media (min-width: 1280px) {
+    .hero { padding: 0 4rem 6rem; }
+    .manifesto { padding: 10rem 4rem; max-width: 1200px; }
+    .journal { max-width: 1400px; padding: 7rem 4rem; }
+    .coleccion-inner { max-width: 1400px; }
+    .pilares { max-width: 1200px; padding: 10rem 4rem; }
+    .footer-inner { max-width: 1400px; }
+  }
+
+  /* ── LAPTOP estándar (1024px – 1279px) ─────────────────
+     13" a 15" — lo más común para ver el sitio en escritorio */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .journal-grid { grid-template-columns: 1.6fr 1fr 1fr; }
+    .producto-grid { grid-template-columns: repeat(3, 1fr); }
+    .pilares-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ── IPAD PRO / TABLET GRANDE (1024px landscape) ───────
+     iPad Pro 12.9" horizontal, tablets Android grandes     */
+  @media (min-width: 900px) and (max-width: 1023px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.25rem; }
+
+    .hero { padding: 0 2rem 5rem; }
+
+    .manifesto { grid-template-columns: 1fr 2fr; gap: 2.5rem; padding: 6rem 2rem; }
+
+    .journal-grid { grid-template-columns: 1.5fr 1fr; gap: 1.5px; }
+    .journal-card.featured { grid-row: span 2; }
+
+    .producto-grid { grid-template-columns: repeat(3, 1fr); }
+    .pilares-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .footer-inner { grid-template-columns: 1.5fr 1fr 1fr; gap: 2rem; }
+  }
+
+  /* ── IPAD / TABLET ESTÁNDAR (768px – 899px) ────────────
+     iPad Air, iPad 10gen, tablets medianas en landscape     */
+  @media (min-width: 768px) and (max-width: 899px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.65rem; }
+
+    .hero { padding: 0 1.5rem 5rem; }
+    .hero-title { font-size: clamp(3rem, 8vw, 5rem); }
+
+    .manifesto { grid-template-columns: 1fr; gap: 2rem; padding: 5rem 1.5rem; }
+    .manifesto-label { position: static; }
+    .manifesto-text { font-size: clamp(1.2rem, 2.5vw, 1.7rem); }
+
+    .journal { padding: 4rem 1.5rem; }
+    .journal-grid { grid-template-columns: 1fr 1fr; gap: 1.5px; }
+    .journal-card.featured { grid-column: span 2; grid-row: auto; }
+
+    .coleccion { padding: 4rem 1.5rem; }
+    .producto-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .pilares { padding: 5rem 1.5rem; }
+    .pilares-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .espera-form { flex-direction: row; }
+    .espera-btn { width: auto; }
+
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: row; }
+
+    .section-header { flex-direction: row; align-items: baseline; }
+  }
+
+  /* ── IPAD PORTRAIT / TELÉFONO GRANDE (600px – 767px) ───
+     iPad mini portrait, Galaxy Tab, iPhone Plus/Max         */
+  @media (min-width: 600px) and (max-width: 767px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+
+    .hero { padding: 0 1.5rem 4rem; }
+    .hero-title { font-size: clamp(3rem, 9vw, 4.5rem); }
+
+    .manifesto { grid-template-columns: 1fr; gap: 1.5rem; padding: 5rem 1.5rem; }
+    .manifesto-label { position: static; }
+
+    .journal { padding: 4rem 1.5rem; }
+    .journal-grid { grid-template-columns: 1fr 1fr; gap: 1.5px; }
+    .journal-card.featured { grid-column: span 2; grid-row: auto; }
+
+    .producto-grid { grid-template-columns: 1fr 1fr; }
+
+    .pilares-grid { grid-template-columns: 1fr 1fr; }
+    .pilar { padding: 2rem; }
+    .pilar-num { font-size: 3rem; }
+
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+    .historia-form { gap: 0.85rem; }
+  }
+
+  /* ── TELÉFONO ESTÁNDAR (390px – 599px) ─────────────────
+     iPhone 14/15, Galaxy S, Pixel — la mayoría de teléfonos */
+  @media (max-width: 599px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+
+    .hero { padding: 0 1.25rem 4rem; min-height: 95vh; }
+    .hero-compass { width: 80vw; height: 80vw; right: -20vw; opacity: 0.03; }
+    .hero-title { font-size: clamp(3rem, 13vw, 4rem); }
+    .hero-sub { font-size: 0.8rem; }
+    .hero-actions { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .btn-primary, .btn-ghost { width: 100%; text-align: center; }
+
+    .manifesto { grid-template-columns: 1fr; gap: 1.5rem; padding: 4rem 1.25rem; }
+    .manifesto-label { position: static; }
+    .manifesto-text { font-size: clamp(1.1rem, 5vw, 1.4rem); }
+
+    .journal { padding: 3.5rem 1.25rem; }
+    .journal-grid { grid-template-columns: 1fr; }
+    .journal-card.featured { grid-row: auto; }
+
+    .coleccion { padding: 3.5rem 1.25rem; }
+    .producto-grid { grid-template-columns: 1fr 1fr; gap: 1.5px; }
+    .producto-info { padding: 0.85rem 1rem; }
+    .producto-nombre { font-size: 1rem; }
+
+    .pilares { padding: 4rem 1.25rem; }
+    .pilares-grid { grid-template-columns: 1fr; }
+    .pilar { padding: 1.75rem 1.25rem; }
+
+    .quote-section { padding: 4rem 1.25rem; }
+    .quote-mark { font-size: 4rem; }
+
+    .espera { padding: 4rem 1.25rem; }
+    .espera-form { flex-direction: column; }
+    .espera-btn { width: 100%; }
+
+    .footer-inner { grid-template-columns: 1fr; gap: 2rem; padding: 0; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .section-header { flex-direction: column; gap: 0.5rem; }
+
+    .modal-article { padding: 4rem 1.25rem 5rem; }
+    .modal-close { top: 1rem; right: 1rem; }
+    .historia-btn { width: 100%; text-align: center; }
+    .permiso-btns { flex-direction: column; }
+    .permiso-btn { width: 100%; text-align: center; }
+  }
+
+  /* ── SAMSUNG GALAXY FOLD — cerrado (280px – 320px) ─────
+     El dispositivo más estrecho del mercado. 280px de ancho. */
+  @media (max-width: 320px) {
+    nav { padding: 0.85rem 1rem; }
+    .nav-logo { font-size: 0.9rem; letter-spacing: 0.12em; }
+
+    .hero { padding: 0 1rem 3.5rem; }
+    .hero-eyebrow { font-size: 0.55rem; }
+    .hero-title { font-size: clamp(2.4rem, 14vw, 3rem); }
+    .hero-sub { font-size: 0.75rem; max-width: 100%; }
+    .btn-primary { padding: 0.8rem 1.25rem; font-size: 0.62rem; }
+
+    .manifesto { padding: 3.5rem 1rem; }
+    .manifesto-text { font-size: 1rem; line-height: 1.7; }
+
+    .journal { padding: 3rem 1rem; }
+    .card-title { font-size: 1.1rem; }
+
+    .coleccion { padding: 3rem 1rem; }
+    .producto-grid { grid-template-columns: 1fr; }
+    .producto-img { aspect-ratio: 4/3; }
+
+    .pilares { padding: 3rem 1rem; }
+    .pilar { padding: 1.25rem 1rem; }
+    .pilar-num { font-size: 2.5rem; }
+    .pilar-titulo { font-size: 1.1rem; }
+
+    .espera { padding: 3rem 1rem; }
+    .espera-title { font-size: 1.6rem; }
+    .espera-input { padding: 0.75rem; font-size: 0.75rem; }
+
+    .modal-article { padding: 3.5rem 1rem 4rem; }
+    .modal-title { font-size: 1.6rem; }
+    .historia-input, .historia-textarea { padding: 0.7rem 0.85rem; font-size: 0.9rem; }
+  }
+
+  /* ── SAMSUNG GALAXY FOLD — abierto (717px landscape) ───
+     Cuando se despliega se comporta como tablet pequeña      */
+  @media (min-width: 600px) and (max-width: 720px) and (min-height: 400px) {
+    .journal-grid { grid-template-columns: 1fr 1fr; }
+    .journal-card.featured { grid-column: span 2; }
+    .producto-grid { grid-template-columns: repeat(3, 1fr); }
+    .pilares-grid { grid-template-columns: 1fr 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── SAMSUNG GALAXY FLIP — cerrado (cover screen ~260px) */
+  @media (max-width: 260px) {
+    .hero-title { font-size: 2rem; }
+    .manifesto-text { font-size: 0.95rem; }
+    .producto-grid { grid-template-columns: 1fr; }
+    .nav-logo { letter-spacing: 0.08em; }
+  }
+
+  /* ── ORIENTACIÓN HORIZONTAL en teléfono ────────────────
+     Cuando giras el teléfono — hero más compacto            */
+  @media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+    .hero { min-height: 100svh; padding: 0 2rem 3rem; justify-content: center; }
+    .hero-title { font-size: clamp(2rem, 7vw, 3rem); }
+    .hero-sub { display: none; }
+    .hero-scroll { display: none; }
+    .manifesto { padding: 4rem 2rem; }
+    .pilares-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ── PANTALLAS MUY ALTAS (tablets en portrait) ─────────
+     Evita que el contenido se vea demasiado estirado        */
+  @media (min-aspect-ratio: 9/16) and (max-width: 768px) {
+    .hero { min-height: 90svh; }
+  }
+
+
+  /* ─── FADE IN ─── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── JOURNAL MODAL ─── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,10,10,0.96);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .modal-overlay.open { display: block; }
+
+  .modal-article {
+    max-width: 680px; margin: 0 auto;
+    padding: 5rem 2rem 6rem;
+    min-height: 100vh;
+  }
+  .modal-close {
+    position: fixed; top: 1.5rem; right: 1.5rem;
+    background: var(--carbon); border: 0.5px solid var(--tierra);
+    color: var(--gris); width: 40px; height: 40px;
+    border-radius: 50%; cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s; z-index: 201;
+  }
+  .modal-close:hover { border-color: var(--ambar); color: var(--arena); }
+
+  .modal-concept {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ambar); margin-bottom: 1.25rem;
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 300;
+    color: var(--arena); line-height: 1.1; margin-bottom: 1rem;
+  }
+  .modal-meta {
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--tierra); margin-bottom: 3rem;
+    padding-bottom: 2rem; border-bottom: 0.5px solid var(--tierra);
+  }
+  .modal-body p {
+    font-size: 1rem; line-height: 1.9; color: var(--gris-clar);
+    margin-bottom: 1.75rem;
+    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.15rem;
+  }
+  .modal-body p strong { color: var(--arena); font-weight: 400; }
+  .modal-body p em { color: var(--ambar); font-style: italic; }
+  .modal-body blockquote {
+    border-left: 1.5px solid var(--ambar); padding-left: 1.5rem;
+    margin: 2.5rem 0; font-style: italic;
+    color: var(--arena); font-size: 1.3rem;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.6;
+  }
+  .modal-signature {
+    margin-top: 3rem; padding-top: 2rem;
+    border-top: 0.5px solid var(--tierra);
+    font-size: 0.75rem; letter-spacing: 0.12em;
+    color: var(--tierra); text-align: right;
+  }
+  .modal-nav {
+    display: flex; justify-content: space-between; margin-top: 3rem;
+    padding-top: 2rem; border-top: 0.5px solid var(--tierra);
+  }
+  .modal-nav-btn {
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gris); background: none; border: none; cursor: pointer;
+    transition: color 0.2s; padding: 0;
+  }
+  .modal-nav-btn:hover { color: var(--ambar); }
+
+
+  /* ─── CUENTA TU HISTORIA ─── */
+  .historia-section {
+    margin-top: 3rem; padding-top: 3rem;
+    border-top: 0.5px solid var(--tierra);
+  }
+  .historia-eyebrow {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ambar); margin-bottom: 0.75rem;
+  }
+  .historia-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300; color: var(--arena);
+    margin-bottom: 0.5rem; line-height: 1.2;
+  }
+  .historia-sub {
+    font-size: 0.82rem; color: var(--gris); line-height: 1.8;
+    margin-bottom: 2rem; max-width: 500px;
+  }
+  .historia-form { display: flex; flex-direction: column; gap: 1rem; }
+  .historia-field {
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .historia-label {
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gris);
+  }
+  .historia-input, .historia-textarea {
+    background: var(--carbon); border: 0.5px solid var(--tierra);
+    color: var(--arena); padding: 0.85rem 1rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+    outline: none; transition: border-color 0.2s; resize: none;
+    width: 100%;
+  }
+  .historia-input::placeholder, .historia-textarea::placeholder {
+    color: var(--tierra); font-style: italic;
+  }
+  .historia-input:focus, .historia-textarea:focus {
+    border-color: var(--ambar);
+  }
+  .historia-textarea { min-height: 160px; line-height: 1.7; }
+  .historia-concepto-tag {
+    font-size: 0.7rem; color: var(--ambar); letter-spacing: 0.06em;
+    padding: 0.5rem 1rem; background: rgba(212,168,83,0.08);
+    border: 0.5px solid rgba(212,168,83,0.2); display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  .historia-btn {
+    background: var(--ambar); color: var(--negro); border: none;
+    padding: 0.9rem 2rem; cursor: pointer; align-self: flex-start;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; transition: opacity 0.2s;
+  }
+  .historia-btn:hover { opacity: 0.85; }
+  .historia-btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* Estado: enviado */
+  .historia-enviado { display: none; }
+  .historia-enviado.visible { display: block; }
+  .historia-enviado-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; color: var(--arena);
+    margin-bottom: 0.75rem;
+  }
+  .historia-enviado-sub {
+    font-size: 0.82rem; color: var(--gris); line-height: 1.8;
+    margin-bottom: 1.75rem;
+  }
+  .permiso-pregunta {
+    font-size: 0.82rem; color: var(--arena); line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .permiso-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .permiso-btn {
+    padding: 0.75rem 1.5rem; border: 0.5px solid var(--tierra);
+    background: transparent; color: var(--gris); cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; transition: all 0.2s;
+  }
+  .permiso-btn:hover { border-color: var(--arena); color: var(--arena); }
+  .permiso-btn.si { border-color: var(--ambar); color: var(--ambar); }
+  .permiso-btn.no { border-color: var(--tierra); }
+  .permiso-confirmado {
+    display: none; font-size: 0.82rem; color: var(--gris);
+    line-height: 1.8; font-style: italic;
+  }
+  .permiso-confirmado.visible { display: block; }
+
+
+  /* ════════════════════════════════════════════════
+     SISTEMA DE TIENDA — modal producto, tallas, carrito
+     ════════════════════════════════════════════════ */
+
+  /* Carrito flotante */
+  .cart-fab {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 150;
+    background: var(--ambar); color: var(--negro);
+    width: 54px; height: 54px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none; font-size: 1.2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .cart-fab:hover { transform: scale(1.08); }
+  .cart-fab.hidden { opacity: 0; pointer-events: none; }
+  .cart-badge {
+    position: absolute; top: -4px; right: -4px;
+    background: var(--negro); color: var(--ambar);
+    width: 20px; height: 20px; border-radius: 50%;
+    font-size: 0.65rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--ambar);
+  }
+
+  /* Modal producto */
+  .pmodal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,10,10,0.92); overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pmodal-overlay.open { display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; }
+  .pmodal-box {
+    background: var(--carbon); width: 100%; max-width: 900px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; margin: auto;
+  }
+  .pmodal-close {
+    position: absolute; top: 1rem; right: 1rem; z-index: 10;
+    background: rgba(10,10,10,0.6); border: 0.5px solid var(--tierra);
+    color: var(--gris); width: 36px; height: 36px; border-radius: 50%;
+    cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .pmodal-close:hover { border-color: var(--ambar); color: var(--arena); }
+
+  /* Galería de fotos */
+  .pmodal-gallery { background: var(--tierra); position: relative; min-height: 420px; }
+  .pmodal-main-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pmodal-main-img svg, .pmodal-main-img .img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 1rem;
+  }
+  .pmodal-thumbs {
+    display: flex; gap: 6px; padding: 0.75rem;
+    overflow-x: auto;
+  }
+  .pmodal-thumb {
+    width: 56px; height: 56px; flex-shrink: 0;
+    background: var(--carbon); border: 1.5px solid transparent;
+    cursor: pointer; transition: border-color 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.55rem; color: var(--gris); letter-spacing: 0.06em;
+    text-transform: uppercase; text-align: center; padding: 4px;
+  }
+  .pmodal-thumb.active { border-color: var(--ambar); }
+  .pmodal-thumb:hover { border-color: var(--arena); }
+  .pmodal-agotado-banner {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--negro); color: var(--gris-clar);
+    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.35rem 0.85rem; border: 0.5px solid var(--gris);
+  }
+
+  /* Info lateral */
+  .pmodal-info { padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem; overflow-y: auto; max-height: 80vh; }
+  .pmodal-concepto { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ambar); }
+  .pmodal-nombre { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--arena); line-height: 1.1; }
+  .pmodal-precio { font-size: 1rem; color: var(--gris-clar); letter-spacing: 0.04em; }
+  .pmodal-desc { font-size: 0.82rem; color: var(--gris); line-height: 1.8; }
+
+  /* Selector de talla */
+  .tallas-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gris); margin-bottom: 0.5rem; }
+  .tallas-grid { display: flex; gap: 6px; flex-wrap: wrap; }
+  .talla-btn {
+    min-width: 48px; height: 48px; padding: 0 0.75rem;
+    background: var(--negro); border: 0.5px solid var(--tierra);
+    color: var(--gris); font-family: 'Inter', sans-serif;
+    font-size: 0.75rem; cursor: pointer; transition: all 0.15s;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px;
+  }
+  .talla-btn:hover:not(.agotada):not(.selected) { border-color: var(--arena); color: var(--arena); }
+  .talla-btn.selected { border-color: var(--ambar); color: var(--ambar); background: rgba(212,168,83,0.08); }
+  .talla-btn.agotada { opacity: 0.35; cursor: not-allowed; position: relative; text-decoration: line-through; }
+  .talla-ref { font-size: 0.5rem; color: var(--tierra); letter-spacing: 0.04em; }
+  .talla-btn.selected .talla-ref { color: var(--ambar); opacity: 0.7; }
+
+  /* Guía de tallas */
+  .guia-link {
+    font-size: 0.65rem; letter-spacing: 0.08em; color: var(--gris);
+    border-bottom: 0.5px dashed var(--tierra); cursor: pointer;
+    padding-bottom: 1px; transition: color 0.2s;
+    background: none; border-top: none; border-left: none; border-right: none;
+  }
+  .guia-link:hover { color: var(--ambar); border-bottom-color: var(--ambar); }
+  .guia-tabla {
+    display: none; background: var(--negro);
+    border: 0.5px solid var(--tierra); padding: 1rem;
+    font-size: 0.75rem;
+  }
+  .guia-tabla.open { display: block; }
+  .guia-tabla table { width: 100%; border-collapse: collapse; }
+  .guia-tabla th { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ambar); padding: 0.4rem 0.5rem; text-align: left; border-bottom: 0.5px solid var(--tierra); }
+  .guia-tabla td { padding: 0.4rem 0.5rem; color: var(--gris); border-bottom: 0.5px solid rgba(46,42,38,0.5); font-size: 0.72rem; }
+  .guia-tabla tr:last-child td { border-bottom: none; }
+
+  /* Botón agregar al carrito */
+  .add-cart-btn {
+    background: var(--ambar); color: var(--negro); border: none;
+    padding: 1rem; width: 100%; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: opacity 0.2s; margin-top: auto;
+  }
+  .add-cart-btn:hover:not(:disabled) { opacity: 0.85; }
+  .add-cart-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .add-cart-btn.agotado-btn { background: var(--tierra); color: var(--gris); }
+
+  /* Carrito lateral */
+  .cart-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 300;
+    width: min(420px, 100vw); background: var(--carbon);
+    border-left: 0.5px solid var(--tierra);
+    transform: translateX(100%); transition: transform 0.3s ease;
+    display: flex; flex-direction: column;
+  }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-header {
+    padding: 1.5rem; border-bottom: 0.5px solid var(--tierra);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .cart-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--arena); }
+  .cart-close-btn {
+    background: none; border: none; color: var(--gris);
+    font-size: 1.1rem; cursor: pointer; transition: color 0.2s;
+  }
+  .cart-close-btn:hover { color: var(--arena); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 1rem 1.5rem; }
+  .cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 0.75rem; }
+  .cart-empty p { font-size: 0.82rem; color: var(--gris); text-align: center; line-height: 1.7; }
+  .cart-item { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 0.5px solid var(--tierra); }
+  .cart-item-img { width: 64px; height: 80px; background: var(--tierra); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .cart-item-info { flex: 1; }
+  .cart-item-nombre { font-size: 0.85rem; font-weight: 500; color: var(--arena); margin-bottom: 2px; }
+  .cart-item-talla { font-size: 0.7rem; color: var(--gris); letter-spacing: 0.06em; margin-bottom: 6px; }
+  .cart-item-precio { font-size: 0.82rem; color: var(--gris-clar); }
+  .cart-item-remove { background: none; border: none; color: var(--tierra); cursor: pointer; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; padding: 0; margin-top: 4px; display: block; }
+  .cart-item-remove:hover { color: var(--ambar); }
+  .cart-footer { padding: 1.5rem; border-top: 0.5px solid var(--tierra); }
+  .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; }
+  .cart-total-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gris); }
+  .cart-total-amount { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--arena); }
+  .checkout-btns { display: flex; flex-direction: column; gap: 0.6rem; }
+  .checkout-btn {
+    width: 100%; padding: 0.9rem; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; transition: opacity 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .checkout-wa { background: #25d366; color: #fff; }
+  .checkout-wa:hover { opacity: 0.9; }
+  .checkout-mail { background: var(--tierra); color: var(--gris-clar); border: 0.5px solid var(--tierra); }
+  .checkout-mail:hover { border-color: var(--arena); color: var(--arena); }
+  .cart-note { font-size: 0.65rem; color: var(--tierra); text-align: center; margin-top: 0.75rem; line-height: 1.6; }
+
+  /* Overlay oscuro cuando carrito abierto */
+  .cart-overlay { display: none; position: fixed; inset: 0; z-index: 299; background: rgba(0,0,0,0.5); }
+  .cart-overlay.open { display: block; }
+
+  /* Tarjeta de producto — nuevo estilo clicable */
+  .producto-card { cursor: pointer; }
+  .producto-badge-agotado {
+    position: absolute; top: 0.75rem; left: 0.75rem;
+    background: rgba(10,10,10,0.8); color: var(--gris);
+    font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.6rem; border: 0.5px solid var(--gris);
+  }
+  .producto-img { position: relative; }
+
+  /* Responsive modal producto */
+  @media (max-width: 640px) {
+    .pmodal-box { grid-template-columns: 1fr; }
+    .pmodal-gallery { min-height: 280px; }
+    .pmodal-main-img { aspect-ratio: 4/3; }
+    .pmodal-info { max-height: none; padding: 1.25rem; }
+    .pmodal-overlay { padding: 0; align-items: flex-end; }
+    .pmodal-box { border-radius: 0; }
+    .cart-drawer { width: 100vw; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">LUNA NORTE</a>
+  <div class="nav-links">
+    <a href="#journal">Journal</a>
+    <a href="#coleccion">Colección</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#espera" class="nav-cta">Nueva colección →</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#journal" onclick="toggleMenu()">Journal</a>
+  <a href="#coleccion" onclick="toggleMenu()">Colección</a>
+  <a href="#nosotros" onclick="toggleMenu()">Nosotros</a>
+  <a href="#espera" onclick="toggleMenu()">Colección 01</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Compass SVG background -->
+  <svg class="hero-compass" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="180" stroke="white" stroke-width="1"/>
+    <circle cx="200" cy="200" r="148" stroke="white" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="120" stroke="white" stroke-width="0.3"/>
+    <path d="M200 30 L210 185 L200 200 L190 185 Z" fill="white"/>
+    <path d="M200 370 L208 215 L200 200 L192 215 Z" fill="white" opacity="0.4"/>
+    <path d="M30 200 L185 192 L200 200 L185 208 Z" fill="white" opacity="0.4"/>
+    <path d="M370 200 L215 192 L200 200 L215 208 Z" fill="white" opacity="0.4"/>
+    <path d="M82 82 L188 188 L200 175 L192 170 Z" fill="white" opacity="0.2"/>
+    <path d="M318 318 L212 212 L200 225 L208 230 Z" fill="white" opacity="0.2"/>
+    <path d="M318 82 L212 188 L225 200 L230 192 Z" fill="white" opacity="0.15"/>
+    <path d="M82 318 L188 212 L175 200 L170 208 Z" fill="white" opacity="0.15"/>
+    <circle cx="200" cy="200" r="12" fill="#0a0a0a" stroke="white" stroke-width="1"/>
+    <circle cx="200" cy="200" r="4" fill="white"/>
+    <circle cx="200" cy="200" r="1.5" fill="#0a0a0a"/>
+    <!-- Tick marks -->
+    <line x1="200" y1="22" x2="200" y2="38" stroke="white" stroke-width="1" opacity="0.3"/>
+    <line x1="200" y1="362" x2="200" y2="378" stroke="white" stroke-width="1" opacity="0.3"/>
+    <line x1="22" y1="200" x2="38" y2="200" stroke="white" stroke-width="1" opacity="0.3"/>
+    <line x1="362" y1="200" x2="378" y2="200" stroke="white" stroke-width="1" opacity="0.3"/>
+    <text x="200" y="16" text-anchor="middle" fill="white" font-size="14" font-family="serif" opacity="0.4">N</text>
+  </svg>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow fade-in">Nacida en Mérida, Yucatán.</p>
+    <h1 class="hero-title fade-in">
+      Luna<br><em>Norte.</em>
+    </h1>
+    <p class="hero-sub fade-in">
+      Para quienes saben a dónde van.<br>
+      Y para quienes todavía lo están descubriendo.
+    </p>
+    <div class="hero-actions fade-in">
+      <a href="#espera" class="btn-primary">Ver la colección</a>
+      <a href="#journal" class="btn-ghost">Leer el journal</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MANIFIESTO -->
+<section id="nosotros">
+  <div class="manifesto">
+    <div class="manifesto-label fade-in">Manifiesto</div>
+    <div class="manifesto-text fade-in">
+      No admiramos la perfección.<br>
+      Admiramos a quienes <strong>se atreven.</strong><br><br>
+      A quienes manejan más rápido, viajan más lejos,<br>
+      se equivocan más veces, aman con más intensidad.<br><br>
+      La vida no pertenece a quienes tienen todo resuelto.<br>
+      Pertenece a quienes tienen el valor de<br>
+      <em>descubrirlo sobre la marcha.</em><br><br>
+      Todos miramos la misma luna.<br>
+      Desde ciudades distintas, desde vidas completamente diferentes.<br>
+      Y aun así, por un instante, <strong>estamos conectados.</strong>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- JOURNAL -->
+<section id="journal">
+  <div class="journal">
+    <div class="section-header fade-in">
+      <h2 class="section-title">Journal</h2>
+      <a href="#" class="section-link">Ver todo →</a>
+    </div>
+
+    <div class="journal-grid">
+
+      <!-- ═══════════════════════════════════════════════════
+           TARJETA 1 — FEATURED (grande, ocupa 2 filas)
+           Para cambiar: edita card-concept, card-title, card-excerpt
+           El onclick="openArticle(0)" corresponde al artículo 0 en ARTICULOS[] abajo
+      ════════════════════════════════════════════════════ -->
+      <div class="journal-card featured fade-in" onclick="openArticle(0)" style="cursor:pointer">
+        <div class="card-concept">Concepto · Sonder</div>
+        <h3 class="card-title">Todos protagonistas.<br>Nadie lo sabe.</h3>
+        <p class="card-excerpt">
+          Hay una palabra en inglés que no tiene traducción: sonder.
+          Es esa sensación de darte cuenta que cada persona que pasa
+          frente a ti tiene una vida tan compleja, tan llena de historias,
+          como la tuya.
+        </p>
+        <p class="card-excerpt" style="color:var(--ambar);font-size:0.75rem;letter-spacing:0.08em;margin-top:auto">
+          Leer →
+        </p>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════
+           TARJETA 2 — onclick="openArticle(1)" → artículo 1
+      ════════════════════════════════════════════════════ -->
+      <div class="journal-card fade-in" onclick="openArticle(1)" style="cursor:pointer">
+        <div class="card-concept">Concepto · Dolce Far Niente</div>
+        <h3 class="card-title">La dulzura de no hacer nada.</h3>
+        <p class="card-excerpt">
+          Los italianos tienen una frase para algo que hemos olvidado hacer bien.
+        </p>
+        <p class="card-excerpt" style="color:var(--ambar);font-size:0.75rem;letter-spacing:0.08em;margin-top:auto">Leer →</p>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════
+           TARJETA 3 — onclick="openArticle(2)" → artículo 2
+      ════════════════════════════════════════════════════ -->
+      <div class="journal-card fade-in" onclick="openArticle(2)" style="cursor:pointer">
+        <div class="card-concept">Concepto · Amor Fati</div>
+        <h3 class="card-title">Amar lo que no elegiste.</h3>
+        <p class="card-excerpt">
+          Nietzsche lo llamó amor fati: amor al destino. No resignación. Amor activo por lo que es.
+        </p>
+        <p class="card-excerpt" style="color:var(--ambar);font-size:0.75rem;letter-spacing:0.08em;margin-top:auto">Leer →</p>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════
+           TARJETA 4 — onclick="openArticle(3)" → artículo 3
+      ════════════════════════════════════════════════════ -->
+      <div class="journal-card fade-in" onclick="openArticle(3)" style="cursor:pointer">
+        <div class="card-concept">Concepto · Mono no Aware</div>
+        <h3 class="card-title">Treinta días vive una mosca.</h3>
+        <p class="card-excerpt">¿Qué estás esperando?</p>
+        <p class="card-excerpt" style="color:var(--ambar);font-size:0.75rem;letter-spacing:0.08em;margin-top:auto">Leer →</p>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════
+           TARJETA 5 — onclick="openArticle(4)" → artículo 4
+      ════════════════════════════════════════════════════ -->
+      <div class="journal-card fade-in" onclick="openArticle(4)" style="cursor:pointer">
+        <div class="card-concept">Concepto · FOMO vs FOBI</div>
+        <h3 class="card-title">Quedarte también es una decisión.</h3>
+        <p class="card-excerpt">El miedo a perderte algo. Y el miedo a perderte el descanso. Esta semana los viví los dos.</p>
+        <p class="card-excerpt" style="color:var(--ambar);font-size:0.75rem;letter-spacing:0.08em;margin-top:auto">Leer →</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- COLECCIÓN -->
+<section id="coleccion">
+  <div class="coleccion">
+    <div class="coleccion-inner">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Colección 01</h2>
+        <a href="#espera" class="section-link">Notifícame →</a>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           PRODUCTOS — para editar un producto busca su objeto en
+           el array PRODUCTOS[] en el <script> al final del archivo.
+           Ahí puedes cambiar nombre, precio, tallas, agotado, etc.
+           Las tarjetas se generan automáticamente desde ese array.
+      ══════════════════════════════════════════════════════════ -->
+      <div class="producto-grid" id="productoGrid">
+        <!-- generado por JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES -->
+<section>
+  <div class="pilares">
+    <div class="section-header fade-in">
+      <h2 class="section-title">Lo que nos define</h2>
+    </div>
+    <div class="pilares-grid">
+      <div class="pilar fade-in">
+        <div class="pilar-num">01</div>
+        <h3 class="pilar-titulo">Dirección propia</h3>
+        <p class="pilar-texto">No seguir el camino marcado. Avanzar con intención aunque nadie más lo entienda. La brújula apunta al norte tuyo, no al de todos.</p>
+      </div>
+      <div class="pilar fade-in">
+        <div class="pilar-num">02</div>
+        <h3 class="pilar-titulo">Vivir con historias</h3>
+        <p class="pilar-texto">Las cicatrices son trofeos. Los desvíos son los mejores capítulos. Una vida con historias vale más que una vida perfecta.</p>
+      </div>
+      <div class="pilar fade-in">
+        <div class="pilar-num">03</div>
+        <h3 class="pilar-titulo">Belleza en las pausas</h3>
+        <p class="pilar-texto">Dolce far niente. Descansar también es avanzar. El café lento, el atardecer sin filtro, la conversación sin reloj.</p>
+      </div>
+      <div class="pilar fade-in">
+        <div class="pilar-num">04</div>
+        <h3 class="pilar-titulo">Rebeldía silenciosa</h3>
+        <p class="pilar-texto">Bold and quiet. No gritar para ser escuchado. Hacer exactamente lo que quieres sin pedir aprobación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <span class="quote-mark">"</span>
+  <p class="quote-text fade-in">
+    La vida no empieza después.<br>
+    Está ocurriendo ahora.
+  </p>
+  <span class="quote-attr fade-in">Luna Norte · Manifiesto</span>
+</section>
+
+<!-- LISTA DE ESPERA -->
+<section class="espera" id="espera">
+  <div class="espera-inner">
+    <h2 class="espera-title fade-in">
+      Sé de los primeros
+    en saberlo.
+    </h2>
+    <p class="espera-sub fade-in">
+      Déjanos tu correo y serás el primero en saber cuándo está lista la colección. Enviamos a todo México.
+    </p>
+    <div class="espera-form fade-in">
+      <input class="espera-input" type="email" placeholder="tu@correo.com" />
+      <button class="espera-btn" onclick="handleSubmit(this)">Quiero entrar</button>
+    </div>
+    <p class="espera-note fade-in">Sin spam. Solo te avisamos cuando la colección esté lista.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">LUNA NORTE</div>
+      <p class="footer-brand-tagline">Nacida en Mérida. Para quienes avanzan en su propia dirección, desde donde sea.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Explorar</div>
+      <ul class="footer-links">
+        <li><a href="#journal">Journal</a></li>
+        <li><a href="#coleccion">Colección</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#espera">Notifícame</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <ul class="footer-links">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">hola@lunanorte.mx</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Luna Norte · Nacida en Mérida · Todos los derechos reservados.</span>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+// ════════════════════════════════════════════════════════════════════
+//  CONFIGURACIÓN — EDITOR: cambia estos valores
+// ════════════════════════════════════════════════════════════════════
+const WHATSAPP_NUM   = "529991234567";   // ← Tu número con código de país, sin + ni espacios
+const CORREO_TIENDA  = "hola@lunanorte.mx"; // ← Tu correo de pedidos
+// CORREO_LUNA_NORTE se usa también para las historias del journal
+
+// ════════════════════════════════════════════════════════════════════
+//  PRODUCTOS
+//  Para agregar un producto: copia un objeto, pégalo al final del
+//  array y llena los campos. agotado:true oculta el botón de compra.
+//  tallasAgotadas: ['S','L'] marca esas tallas como no disponibles.
+//  fotos: array de textos que aparecen como vistas del producto
+//  (cuando tengas fotos reales, reemplaza el svg por <img src="...">)
+// ════════════════════════════════════════════════════════════════════
+const PRODUCTOS = [
+  {
+    id: 1,
+    concepto: "Brújula Rota",
+    nombre: "Playera Negra",
+    precio: 550,
+    agotado: false,
+    desc: "Logo LN bordado en pecho izquierdo. Gráfico de brújula estampado en espalda. 100% algodón heavyweight. Corte oversized unisex.",
+    color: "#0a0a0a",
+    tallas: ["XS","S","M","L","XL","XXL"],
+    tallasAgotadas: [],
+    guiaTallas: [
+      { t:"XS", pecho:"48", largo:"66", hombro:"42" },
+      { t:"S",  pecho:"51", largo:"68", hombro:"44" },
+      { t:"M",  pecho:"54", largo:"70", hombro:"46" },
+      { t:"L",  pecho:"57", largo:"72", hombro:"48" },
+      { t:"XL", pecho:"60", largo:"74", hombro:"50" },
+      { t:"XXL",pecho:"63", largo:"76", hombro:"52" },
+    ],
+    fotos: ["Frente","Espalda","Detalle bordado","Detalle estampado"],
+    svgColor: "#d4a853",
+  },
+  {
+    id: 2,
+    concepto: "Mono no Aware",
+    nombre: "Playera Tierra",
+    precio: 550,
+    agotado: false,
+    desc: "Logo LN bordado en pecho. Luna y olas estampadas en espalda. 100% algodón. Corte oversized.",
+    color: "#3d3530",
+    tallas: ["XS","S","M","L","XL","XXL"],
+    tallasAgotadas: [],
+    guiaTallas: [
+      { t:"XS", pecho:"48", largo:"66", hombro:"42" },
+      { t:"S",  pecho:"51", largo:"68", hombro:"44" },
+      { t:"M",  pecho:"54", largo:"70", hombro:"46" },
+      { t:"L",  pecho:"57", largo:"72", hombro:"48" },
+      { t:"XL", pecho:"60", largo:"74", hombro:"50" },
+      { t:"XXL",pecho:"63", largo:"76", hombro:"52" },
+    ],
+    fotos: ["Frente","Espalda","Detalle bordado","Detalle luna"],
+    svgColor: "#d4c9b0",
+  },
+  {
+    id: 3,
+    concepto: "Amor Fati",
+    nombre: "Playera Azul Cielo",
+    precio: 550,
+    agotado: false,
+    desc: "Logo LN bordado. Estrella de navegación estampada en espalda. 100% algodón. Corte oversized.",
+    color: "#1a3040",
+    tallas: ["XS","S","M","L","XL","XXL"],
+    tallasAgotadas: [],
+    guiaTallas: [
+      { t:"XS", pecho:"48", largo:"66", hombro:"42" },
+      { t:"S",  pecho:"51", largo:"68", hombro:"44" },
+      { t:"M",  pecho:"54", largo:"70", hombro:"46" },
+      { t:"L",  pecho:"57", largo:"72", hombro:"48" },
+      { t:"XL", pecho:"60", largo:"74", hombro:"50" },
+      { t:"XXL",pecho:"63", largo:"76", hombro:"52" },
+    ],
+    fotos: ["Frente","Espalda","Detalle bordado","Detalle estrella"],
+    svgColor: "#7ab3cc",
+  },
+  {
+    id: 4,
+    concepto: "Make Yucatán a Country Again",
+    nombre: "Gorra Negra",
+    precio: 400,
+    agotado: false,
+    desc: "Bordado frontal. Parche LN lateral. Interior de visera con bandera de Yucatán. Snapback ajustable.",
+    color: "#2a2015",
+    tallas: ["Única"],
+    tallasAgotadas: [],
+    guiaTallas: [
+      { t:"Única", pecho:"Ajustable", largo:"—", hombro:"—" },
+    ],
+    fotos: ["Frente","Lateral","Interior visera","Parche LN"],
+    svgColor: "#d4a853",
+    esGorra: true,
+  },
+  {
+    id: 5,
+    concepto: "El que sabe, sabe.",
+    nombre: "Gorra Arena",
+    precio: 400,
+    agotado: false,
+    desc: "Brújula bordada al frente — sin nombre visible. 'El que sabe, sabe.' en parte trasera. Snapback ajustable.",
+    color: "#e8dfc8",
+    tallas: ["Única"],
+    tallasAgotadas: [],
+    guiaTallas: [
+      { t:"Única", pecho:"Ajustable", largo:"—", hombro:"—" },
+    ],
+    fotos: ["Frente","Trasera","Detalle brújula","Interior"],
+    svgColor: "#2e2a26",
+    esGorra: true,
+    colorTexto: "#2e2a26",
+  },
+  {
+    id: 6,
+    concepto: "Sonder",
+    nombre: "Playera Carbón",
+    precio: 550,
+    agotado: false,
+    desc: "Logo LN bordado. Constelación humana estampada en espalda con acento ámbar. 100% algodón heavyweight.",
+    color: "#1c1c1c",
+    tallas: ["XS","S","M","L","XL","XXL"],
+    tallasAgotadas: [],
+    guiaTallas: [
+      { t:"XS", pecho:"48", largo:"66", hombro:"42" },
+      { t:"S",  pecho:"51", largo:"68", hombro:"44" },
+      { t:"M",  pecho:"54", largo:"70", hombro:"46" },
+      { t:"L",  pecho:"57", largo:"72", hombro:"48" },
+      { t:"XL", pecho:"60", largo:"74", hombro:"50" },
+      { t:"XXL",pecho:"63", largo:"76", hombro:"52" },
+    ],
+    fotos: ["Frente","Espalda","Detalle bordado","Detalle constelación"],
+    svgColor: "#d4a853",
+  },
+];
+
+// ════════════════════════════════════════════════════════════════════
+//  ARTÍCULOS DEL JOURNAL
+//  Para agregar: copia un bloque {}, pégalo antes del ];
+//  y agrega tarjeta en el HTML con onclick="openArticle(N)"
+// ════════════════════════════════════════════════════════════════════
+const ARTICULOS = [
+  {
+    concepto: "Concepto · Sonder",
+    titulo: "Todos protagonistas. Nadie lo sabe.",
+    meta: "Luna Norte · Journal · 2026",
+    cuerpo: `
+      <p>Hay una palabra en inglés que no tiene traducción al español: <strong>sonder</strong>.</p>
+      <p>Es esa sensación de darte cuenta que cada persona que pasa frente a ti — el tipo en la moto, la señora en el súper, el mesero que te trajo el café — tiene una vida tan compleja, tan llena de historias, miedos, amores y decepciones, como la tuya.</p>
+      <p>Que tú eres el extra en la película de alguien más.</p>
+      <blockquote>La próxima vez que estés en un semáforo, en un café, en la fila del baño — mira a alguien. No saben que existes. Y aun así, llevan todo un universo adentro.</blockquote>
+      <p>No sé por qué eso me reconforta tanto. Que seamos millones de mundos paralelos caminando en la misma ciudad, sin enterarnos.</p>
+      <p>Sonder es la razón por la que me gusta hablar con extraños. La razón por la que pregunto cómo estás y espero la respuesta real, no la automática.</p>
+      <p>No todos los días lo hacemos. Pero los días que sí — esos son los días que se quedan.</p>
+    `
+  },
+  {
+    concepto: "Concepto · Dolce Far Niente",
+    titulo: "La dulzura de no hacer nada.",
+    meta: "Luna Norte · Journal · 2026",
+    cuerpo: `
+      <p>Los italianos tienen una frase para algo que nosotros hemos olvidado hacer bien: <strong>dolce far niente</strong>. La dulzura de no hacer nada.</p>
+      <p>No la culpa de no hacer nada. No la ansiedad de no hacer nada. La <em>dulzura</em>.</p>
+      <p>Vivimos en una cultura que convirtió el descanso en algo que hay que justificar. Que si no estás ocupado, algo está mal contigo.</p>
+      <blockquote>Pero hay noches en que lo más valioso que puedes hacer es sentarte en una silla, ver el cielo, y no pensar en nada particular.</blockquote>
+      <p>Esos momentos no son pérdidas de tiempo. Son los momentos en que te acuerdas de que no eres solo lo que produces.</p>
+      <p>Dolce far niente. Aprenderlo es una de las cosas más difíciles y más importantes que puedes hacer.</p>
+    `
+  },
+  {
+    concepto: "Concepto · Amor Fati",
+    titulo: "Amar lo que no elegiste.",
+    meta: "Luna Norte · Journal · 2026",
+    cuerpo: `
+      <p>Nietzsche lo llamó <strong>amor fati</strong>: amor al destino. No resignación. No conformismo. Amor activo por lo que es, exactamente como es.</p>
+      <p>Es una de las ideas más difíciles de verdad practicar. Porque es fácil amar lo que elegiste. Lo difícil es amar lo que te pasó sin que lo pidieras.</p>
+      <blockquote>El accidente. La ruptura. El trabajo que no salió. El viaje que se canceló. El año que se torció.</blockquote>
+      <p>Amor fati no dice que esas cosas estuvieron bien. Dice que son parte de lo que eres ahora.</p>
+      <p>No elegiste el camino. Pero puedes elegir cómo caminarlo.</p>
+    `
+  },
+  {
+    concepto: "Concepto · Mono no Aware",
+    titulo: "Treinta días vive una mosca.",
+    meta: "Luna Norte · Journal · 2026",
+    cuerpo: `
+      <p>Treinta días vive una mosca. ¿Qué estás esperando?</p>
+      <p>Los japoneses tienen un concepto que no tiene traducción exacta: <strong>mono no aware</strong>. La sensación agridulce de la transitoriedad. La belleza de las cosas precisamente porque no duran.</p>
+      <blockquote>¿Cuántas cosas tienes en tu vida que son tan valiosas precisamente porque no van a durar para siempre, y que no estás disfrutando porque das por hecho que siempre van a estar?</blockquote>
+      <p>Mono no aware no es tristeza. Es presencia. Es la invitación a estar aquí, ahora, con lo que hay — antes de que cambie.</p>
+      <p>Porque va a cambiar. Todo cambia. Y eso no es una amenaza. Es la razón para no esperar.</p>
+    `
+  },
+  {
+    concepto: "Concepto · FOMO vs FOBI",
+    titulo: "Quedarte también es una decisión.",
+    meta: "Luna Norte · Journal · 2026",
+    cuerpo: `
+      <p>Esta semana me encontré atrapado entre dos emociones.</p>
+      <p>La primera fue el <strong>FOMO</strong>.<br>El miedo a perderme algo.</p>
+      <p>La graduación de mi hermano reunió a muchos amigos y personas que quiero. Y me di cuenta de cuánto había extrañado esa sensación de pertenecer. Ese grupo donde nadie te juzga. Donde podemos molestarnos entre nosotros. Donde alguien puede decir una tontería enorme o pasar una noche demasiado intensa y aun así seguir siendo bienvenido.</p>
+      <blockquote>Porque nadie espera perfección.<br>Solo presencia.</blockquote>
+      <p>Pero unos días después apareció la emoción contraria.<br><strong>FOBI</strong>.<br>El miedo a perderme el descanso.</p>
+      <p>Había una salida que prometía ser la mejor noche de la semana. Y aun así decidí quedarme.</p>
+      <p>Por primera vez entendí que descansar también es elegir. Que no todas las buenas historias ocurren afuera. Algunas ocurren cuando decides escucharte.</p>
+      <p><em>¿Y tú? ¿Cuál de las dos gana más seguido en tu vida — el FOMO o el FOBI? Cuéntanos tu historia abajo.</em></p>
+    `
+  },
+];
+
+// ════════════════════════════════════════════════════════════════════
+//  ESTADO
+// ════════════════════════════════════════════════════════════════════
+let carrito = [];
+let productoActual = null;
+let tallaSeleccionada = null;
+let fotoActual = 0;
+let articuloActual = 0;
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDERIZAR TARJETAS DE PRODUCTOS
+// ════════════════════════════════════════════════════════════════════
+const SUBLOGOS = {
+  1: `<svg width="70" height="85" viewBox="0 0 120 145" fill="none">
+      <!-- Brújula Rota - Negro -->
+      <circle cx="60" cy="62" r="28" fill="none" stroke="#cccccc" stroke-width="1.2"/>
+      <circle cx="60" cy="62" r="22" fill="none" stroke="#555" stroke-width="0.6" opacity="0.4"/>
+      <polygon points="60,34 63,57 60,62 57,57" fill="#ffffff"/>
+      <polygon points="60,90 63,67 60,62 57,67" fill="#666"/>
+      <polygon points="32,62 55,59 60,62 55,65" fill="#666"/>
+      <polygon points="88,62 65,59 60,62 65,65" fill="#666"/>
+      <circle cx="60" cy="62" r="4" fill="#0a0a0a" stroke="#888" stroke-width="0.8"/>
+      <circle cx="60" cy="62" r="1.5" fill="#d4a853"/>
+      <line x1="60" y1="34" x2="65" y2="29" stroke="#d4a853" stroke-width="1" stroke-dasharray="2 2"/>
+      <text x="60" y="108" font-family="sans-serif" font-size="7" fill="#888888" text-anchor="middle" letter-spacing="1">EL NORTE NO SE BUSCA.</text>
+      <text x="60" y="120" font-family="sans-serif" font-size="7" fill="#888888" text-anchor="middle" letter-spacing="1">SE SIENTE.</text>
+    </svg>`,
+  2: `<svg width="70" height="85" viewBox="0 0 120 145" fill="none">
+      <!-- Copa Dolce Far Niente - Arena -->
+      <ellipse cx="60" cy="50" rx="22" ry="14" fill="none" stroke="#6b5e4a" stroke-width="1.5"/>
+      <line x1="38" y1="50" x2="44" y2="82" stroke="#6b5e4a" stroke-width="1.5"/>
+      <line x1="82" y1="50" x2="76" y2="82" stroke="#6b5e4a" stroke-width="1.5"/>
+      <line x1="44" y1="82" x2="76" y2="82" stroke="#6b5e4a" stroke-width="1.5"/>
+      <line x1="60" y1="82" x2="60" y2="100" stroke="#6b5e4a" stroke-width="1.5"/>
+      <line x1="46" y1="100" x2="74" y2="100" stroke="#6b5e4a" stroke-width="2"/>
+      <circle cx="60" cy="42" r="2" fill="#d4a853"/>
+      <text x="60" y="120" font-family="sans-serif" font-size="7" fill="#8a7a60" text-anchor="middle" letter-spacing="1">DOLCE FAR NIENTE.</text>
+    </svg>`,
+  3: `<svg width="70" height="85" viewBox="0 0 120 145" fill="none">
+      <!-- Constelación Sonder - Carbón -->
+      <circle cx="60" cy="62" r="8" fill="#d4a853"/>
+      <circle cx="60" cy="62" r="12" fill="none" stroke="#d4a853" stroke-width="0.6" opacity="0.3"/>
+      <circle cx="36" cy="44" r="5" fill="none" stroke="#a08060" stroke-width="1.2"/>
+      <circle cx="84" cy="44" r="5" fill="none" stroke="#a08060" stroke-width="1.2"/>
+      <circle cx="38" cy="80" r="5" fill="none" stroke="#a08060" stroke-width="1.2"/>
+      <circle cx="82" cy="80" r="5" fill="none" stroke="#a08060" stroke-width="1.2"/>
+      <circle cx="22" cy="62" r="4" fill="none" stroke="#7a6040" stroke-width="1"/>
+      <circle cx="98" cy="62" r="4" fill="none" stroke="#7a6040" stroke-width="1"/>
+      <line x1="60" y1="62" x2="36" y2="44" stroke="#5a4525" stroke-width="0.8"/>
+      <line x1="60" y1="62" x2="84" y2="44" stroke="#5a4525" stroke-width="0.8"/>
+      <line x1="60" y1="62" x2="38" y2="80" stroke="#5a4525" stroke-width="0.8"/>
+      <line x1="60" y1="62" x2="82" y2="80" stroke="#5a4525" stroke-width="0.8"/>
+      <line x1="60" y1="62" x2="22" y2="62" stroke="#5a4525" stroke-width="0.6"/>
+      <line x1="60" y1="62" x2="98" y2="62" stroke="#5a4525" stroke-width="0.6"/>
+      <text x="60" y="110" font-family="sans-serif" font-size="7" fill="#7a6040" text-anchor="middle" letter-spacing="1">TODOS PROTAGONISTAS.</text>
+    </svg>`,
+  4: `<svg width="70" height="85" viewBox="0 0 120 145" fill="none">
+      <!-- Estrella Amor Fati - Verde -->
+      <polygon points="60,28 63.5,56 60,62 56.5,56" fill="#c8e0c8"/>
+      <polygon points="60,96 63,68 60,62 57,68" fill="#4a7a50"/>
+      <polygon points="24,62 54,58 60,62 54,66" fill="#4a7a50"/>
+      <polygon points="96,62 66,58 60,62 66,66" fill="#4a7a50"/>
+      <polygon points="84,36 66,56 70,62 74,58" fill="#3a6540" opacity="0.8"/>
+      <polygon points="36,36 54,56 50,62 46,58" fill="#3a6540" opacity="0.7"/>
+      <polygon points="84,88 66,68 70,62 74,66" fill="#3a6540" opacity="0.7"/>
+      <polygon points="36,88 54,68 50,62 46,66" fill="#3a6540" opacity="0.7"/>
+      <circle cx="60" cy="62" r="5" fill="#1a3020" stroke="#7ab37a" stroke-width="1"/>
+      <circle cx="60" cy="62" r="2" fill="#d4a853"/>
+      <text x="60" y="110" font-family="sans-serif" font-size="7" fill="#4a7a50" text-anchor="middle" letter-spacing="1">NO ELEGÍ EL CAMINO.</text>
+    </svg>`,
+  5: `<svg width="70" height="85" viewBox="0 0 120 145" fill="none">
+      <!-- Gorra negro G1 - placeholder brujula -->
+      <circle cx="60" cy="50" r="22" fill="none" stroke="#d4a853" stroke-width="1.2"/>
+      <circle cx="60" cy="50" r="17" fill="none" stroke="#d4a853" stroke-width="0.6" opacity="0.4"/>
+      <polygon points="60,27 62.5,46 60,50 57.5,46" fill="#ffffff"/>
+      <polygon points="60,73 62,54 60,50 58,54" fill="#666"/>
+      <polygon points="37,50 54,48 60,50 54,52" fill="#666"/>
+      <polygon points="83,50 66,48 60,50 66,52" fill="#666"/>
+      <circle cx="60" cy="50" r="3" fill="#111" stroke="#666" stroke-width="0.8"/>
+      <circle cx="60" cy="50" r="1.2" fill="#d4a853"/>
+      <text x="60" y="95" font-family="sans-serif" font-size="6.5" fill="#888" text-anchor="middle" letter-spacing="0.8">THE NORTH ISN'T</text>
+      <text x="60" y="108" font-family="sans-serif" font-size="6.5" fill="#888" text-anchor="middle" letter-spacing="0.8">FOUND. IT'S FELT.</text>
+    </svg>`,
+  6: `<svg width="70" height="85" viewBox="0 0 120 145" fill="none">
+      <!-- Luna Mono no Aware - Blanco -->
+      <circle cx="60" cy="54" r="26" fill="none" stroke="#555555" stroke-width="1.4"/>
+      <circle cx="69" cy="54" r="22" fill="#f8f6f0"/>
+      <path d="M22 82 Q30 76 38 82 Q46 88 54 82 Q62 76 70 82 Q78 88 86 82 Q94 76 98 82" fill="none" stroke="#555" stroke-width="1.2"/>
+      <path d="M24 92 Q32 86 40 92 Q48 98 56 92 Q64 86 72 92 Q80 98 88 92" fill="none" stroke="#888" stroke-width="0.8"/>
+      <text x="60" y="114" font-family="Georgia,serif" font-style="italic" font-size="8" fill="#555" text-anchor="middle" letter-spacing="0.5">Mono no Aware.</text>
+    </svg>`,
+};
+
+function renderProductos() {
+  const grid = document.getElementById('productoGrid');
+  grid.innerHTML = PRODUCTOS.map(p => `
+    <div class="producto-card fade-in" onclick="openProducto(${p.id})">
+      <div class="producto-img" style="background:${p.color};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;padding:1.5rem 0.5rem;">
+        ${p.agotado ? '<div class="producto-badge-agotado">Agotado</div>' : ''}
+        ${SUBLOGOS[p.id] || ''}
+        <span style="font-size:0.58rem;letter-spacing:0.18em;color:${p.svgColor};text-transform:uppercase;opacity:0.7;font-family:sans-serif;">Próximamente</span>
+      </div>
+      <div class="producto-info">
+        <div class="producto-concepto">${p.concepto}</div>
+        <div class="producto-nombre">${p.nombre}</div>
+        <div class="producto-precio">${p.agotado ? '<span style="color:var(--gris)">Agotado</span>' : '$' + p.precio.toLocaleString() + ' MXN'}</div>
+      </div>
+      <div class="producto-accion">
+        <span>${p.agotado ? 'Agotado' : 'Ver producto'}</span> ${p.agotado ? '' : '→'}
+      </div>
+    </div>
+  `).join('');
+  document.querySelectorAll('#productoGrid .fade-in').forEach(el => observer.observe(el));
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  MODAL DE PRODUCTO
+// ════════════════════════════════════════════════════════════════════
+function openProducto(id) {
+  productoActual = PRODUCTOS.find(p => p.id === id);
+  tallaSeleccionada = productoActual.tallas.length === 1 ? productoActual.tallas[0] : null;
+  fotoActual = 0;
+  const p = productoActual;
+
+  document.getElementById('pmodalConcepto').textContent = p.concepto;
+  document.getElementById('pmodalNombre').textContent = p.nombre;
+  document.getElementById('pmodalPrecio').textContent = p.agotado ? 'Agotado' : '$' + p.precio.toLocaleString() + ' MXN';
+  document.getElementById('pmodalDesc').textContent = p.desc;
+
+  // Agotado banner
+  document.getElementById('pmodalAgotadoBanner').style.display = p.agotado ? 'block' : 'none';
+
+  // Fotos / vistas
+  renderFotos(p);
+
+  // Tallas
+  renderTallas(p);
+
+  // Botón
+  const btn = document.getElementById('addCartBtn');
+  if (p.agotado) {
+    btn.textContent = 'Agotado';
+    btn.classList.add('agotado-btn');
+    btn.disabled = true;
+  } else {
+    btn.textContent = p.tallas.length === 1 ? 'Agregar al carrito' : 'Selecciona una talla';
+    btn.classList.remove('agotado-btn');
+    btn.disabled = p.tallas.length > 1;
+  }
+
+  document.getElementById('pmodal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePModal() {
+  document.getElementById('pmodal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderFotos(p) {
+  const main = document.getElementById('pmodalMainImg');
+  const thumbs = document.getElementById('pmodalThumbs');
+
+  main.innerHTML = `
+    <div class="img-placeholder" style="background:${p.color};width:100%;height:100%;min-height:320px">
+      <svg width="80" height="80" viewBox="0 0 60 60" fill="none">
+        <circle cx="30" cy="30" r="22" stroke="${p.svgColor}" stroke-width="0.6" opacity="0.3"/>
+        <path d="M30 10 L33 27 L30 30 L27 27 Z" fill="${p.svgColor}"/>
+        <path d="M30 50 L32 33 L30 30 L28 33 Z" fill="${p.svgColor}" opacity="0.3"/>
+        <path d="M10 30 L27 28 L30 30 L27 32 Z" fill="${p.svgColor}" opacity="0.3"/>
+        <path d="M50 30 L33 28 L30 30 L33 32 Z" fill="${p.svgColor}" opacity="0.3"/>
+      </svg>
+      <span style="font-size:0.65rem;letter-spacing:0.1em;color:${p.svgColor};text-transform:uppercase;opacity:0.5">${p.fotos[fotoActual]}</span>
+    </div>`;
+
+  thumbs.innerHTML = p.fotos.map((f, i) => `
+    <div class="pmodal-thumb ${i === fotoActual ? 'active' : ''}" onclick="cambiarFoto(${i})">
+      ${f}
+    </div>`).join('');
+}
+
+function cambiarFoto(i) {
+  fotoActual = i;
+  renderFotos(productoActual);
+}
+
+function renderTallas(p) {
+  const grid = document.getElementById('tallasGrid');
+  const guiaBody = document.getElementById('guiaBody');
+
+  grid.innerHTML = p.tallas.map(t => {
+    const agotada = p.tallasAgotadas.includes(t);
+    const selected = tallaSeleccionada === t;
+    return `<button class="talla-btn ${agotada ? 'agotada' : ''} ${selected ? 'selected' : ''}"
+      onclick="${agotada ? '' : `selectTalla('${t}')`}"
+      ${agotada ? 'disabled' : ''}>
+      ${t}
+      ${!p.esGorra ? `<span class="talla-ref">${getTallaRef(t)}</span>` : ''}
+    </button>`;
+  }).join('');
+
+  guiaBody.innerHTML = p.guiaTallas.map(g =>
+    `<tr><td>${g.t}</td><td>${g.pecho}</td><td>${g.largo}</td><td>${g.hombro}</td></tr>`
+  ).join('');
+}
+
+function getTallaRef(t) {
+  const refs = { XS:'34-36', S:'36-38', M:'38-40', L:'40-42', XL:'42-44', XXL:'44-46' };
+  return refs[t] || '';
+}
+
+function selectTalla(t) {
+  tallaSeleccionada = t;
+  renderTallas(productoActual);
+  const btn = document.getElementById('addCartBtn');
+  btn.textContent = 'Agregar al carrito';
+  btn.disabled = false;
+  document.getElementById('pmodalTallaError').style.display = 'none';
+}
+
+function toggleGuia() {
+  document.getElementById('guiaTalla').classList.toggle('open');
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  CARRITO
+// ════════════════════════════════════════════════════════════════════
+function addToCart() {
+  if (!tallaSeleccionada) {
+    document.getElementById('pmodalTallaError').style.display = 'block';
+    return;
+  }
+  const p = productoActual;
+  const existing = carrito.find(i => i.id === p.id && i.talla === tallaSeleccionada);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    carrito.push({ id: p.id, nombre: p.nombre, concepto: p.concepto, precio: p.precio, talla: tallaSeleccionada, color: p.color, svgColor: p.svgColor, qty: 1 });
+  }
+  closePModal();
+  updateCartUI();
+  setTimeout(() => toggleCart(), 200);
+}
+
+function removeFromCart(id, talla) {
+  carrito = carrito.filter(i => !(i.id === id && i.talla === talla));
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const total = carrito.reduce((s, i) => s + i.precio * i.qty, 0);
+  const count = carrito.reduce((s, i) => s + i.qty, 0);
+  const fab = document.getElementById('cartFab');
+  const badge = document.getElementById('cartBadge');
+  const footer = document.getElementById('cartFooter');
+  const items = document.getElementById('cartItems');
+  const totalEl = document.getElementById('cartTotal');
+
+  badge.textContent = count;
+  fab.classList.toggle('hidden', count === 0);
+  footer.style.display = count > 0 ? 'block' : 'none';
+  totalEl.textContent = '$' + total.toLocaleString() + ' MXN';
+
+  if (count === 0) {
+    items.innerHTML = `<div class="cart-empty">
+      <span style="font-size:2rem;opacity:0.3">🛍</span>
+      <p>Tu carrito está vacío.<br>Explora la colección y agrega lo que te llame.</p>
+    </div>`;
+  } else {
+    items.innerHTML = carrito.map(i => `
+      <div class="cart-item">
+        <div class="cart-item-img" style="background:${i.color}">
+          <svg width="32" height="32" viewBox="0 0 60 60" fill="none">
+            <path d="M30 10 L33 27 L30 30 L27 27 Z" fill="${i.svgColor}"/>
+            <path d="M30 50 L32 33 L30 30 L28 33 Z" fill="${i.svgColor}" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="cart-item-info">
+          <div class="cart-item-nombre">${i.nombre}</div>
+          <div class="cart-item-talla">Talla: ${i.talla} · Qty: ${i.qty}</div>
+          <div class="cart-item-precio">$${(i.precio * i.qty).toLocaleString()} MXN</div>
+          <button class="cart-item-remove" onclick="removeFromCart(${i.id}, '${i.talla}')">Eliminar</button>
+        </div>
+      </div>`).join('');
+  }
+}
+
+function toggleCart() {
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+// ── Checkout ──────────────────────────────────────────────────────
+function buildOrderText() {
+  const lines = carrito.map(i => `• ${i.nombre} (${i.concepto}) — Talla ${i.talla} × ${i.qty} = $${(i.precio * i.qty).toLocaleString()} MXN`);
+  const total = carrito.reduce((s, i) => s + i.precio * i.qty, 0);
+  return lines.join('\n') + '\n\nTotal: $' + total.toLocaleString() + ' MXN';
+}
+
+function checkoutWA() {
+  const msg = encodeURIComponent('¡Hola Luna Norte! Quiero hacer el siguiente pedido:\n\n' + buildOrderText() + '\n\n¿Cómo procedo con el pago y envío?');
+  window.open('https://wa.me/' + WHATSAPP_NUM + '?text=' + msg, '_blank');
+}
+
+function checkoutMail() {
+  const asunto = encodeURIComponent('Pedido Luna Norte');
+  const cuerpo = encodeURIComponent('Hola Luna Norte,\n\nQuiero hacer el siguiente pedido:\n\n' + buildOrderText() + '\n\nPor favor indícame cómo proceder con el pago y el envío.\n\nGracias.');
+  window.location.href = 'mailto:' + CORREO_TIENDA + '?subject=' + asunto + '&body=' + cuerpo;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  JOURNAL MODAL
+// ════════════════════════════════════════════════════════════════════
+function resetHistoria(concepto) {
+  document.getElementById('historiaConcept').textContent = concepto;
+  document.getElementById('historiaNombre').value = '';
+  document.getElementById('historiaCorreo').value = '';
+  document.getElementById('historiaTexto').value = '';
+  document.getElementById('historiaForm').style.display = 'flex';
+  document.getElementById('historiaEnviado').classList.remove('visible');
+  document.getElementById('permisoBtns').style.display = 'flex';
+  document.getElementById('permisoConfirmado').classList.remove('visible');
+  document.getElementById('permisoConfirmado').textContent = '';
+}
+
+const CORREO_LUNA_NORTE = "hola@lunanorte.mx";
+
+function enviarHistoria() {
+  const nombre  = document.getElementById('historiaNombre').value.trim() || 'Anónimo';
+  const correo  = document.getElementById('historiaCorreo').value.trim();
+  const texto   = document.getElementById('historiaTexto').value.trim();
+  const concepto = document.getElementById('historiaConcept').textContent;
+  if (!texto) {
+    document.getElementById('historiaTexto').style.borderColor = '#c62828';
+    document.getElementById('historiaTexto').focus();
+    return;
+  }
+  const asunto = encodeURIComponent('Historia Luna Norte — ' + concepto);
+  const cuerpo = encodeURIComponent('Concepto: ' + concepto + '\nNombre: ' + nombre + '\nCorreo: ' + (correo || 'No proporcionado') + '\n\n— Historia —\n\n' + texto);
+  window.location.href = 'mailto:' + CORREO_LUNA_NORTE + '?subject=' + asunto + '&body=' + cuerpo;
+  setTimeout(() => {
+    document.getElementById('historiaForm').style.display = 'none';
+    document.getElementById('historiaEnviado').classList.add('visible');
+  }, 800);
+}
+
+function responderPermiso(acepta) {
+  const concepto = document.getElementById('historiaConcept').textContent;
+  const confirmado = document.getElementById('permisoConfirmado');
+  document.getElementById('permisoBtns').style.display = 'none';
+  if (acepta) {
+    const asunto = encodeURIComponent('PERMISO — Historia Luna Norte — ' + concepto);
+    const cuerpo = encodeURIComponent('El autor dio permiso de publicar su historia.\nConcepto: ' + concepto);
+    window.location.href = 'mailto:' + CORREO_LUNA_NORTE + '?subject=' + asunto + '&body=' + cuerpo;
+    confirmado.textContent = 'Perfecto. Te avisamos antes de publicar — siempre con tu nombre como tú quieras.';
+  } else {
+    confirmado.textContent = 'Entendido. La historia se queda entre nosotros. Gracias por compartirla.';
+  }
+  confirmado.classList.add('visible');
+}
+
+function openArticle(index) {
+  articuloActual = index;
+  const a = ARTICULOS[index];
+  document.getElementById('modalConcept').textContent = a.concepto;
+  document.getElementById('modalTitle').textContent = a.titulo;
+  document.getElementById('modalMeta').textContent = a.meta;
+  document.getElementById('modalBody').innerHTML = a.cuerpo;
+  document.getElementById('btnPrev').style.visibility = index === 0 ? 'hidden' : 'visible';
+  document.getElementById('btnNext').style.visibility = index === ARTICULOS.length - 1 ? 'hidden' : 'visible';
+  resetHistoria(a.concepto);
+  const modal = document.getElementById('journalModal');
+  modal.classList.add('open');
+  modal.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeArticle() {
+  document.getElementById('journalModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function navArticle(dir) {
+  const next = articuloActual + dir;
+  if (next >= 0 && next < ARTICULOS.length) openArticle(next);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  UTILIDADES
+// ════════════════════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeArticle(); closePModal(); }
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+function handleSubmit(btn) {
+  const input = btn.previousElementSibling;
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) { input.style.borderColor = '#c62828'; input.focus(); return; }
+  btn.textContent = '¡Listo!'; btn.style.background = '#2e7d32'; btn.style.color = '#fff';
+  input.value = ''; input.disabled = true; btn.disabled = true;
+}
+
+document.querySelectorAll('.hero .fade-in').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.15) + 's';
+  setTimeout(() => el.classList.add('visible'), 100 + i * 150);
+});
+
+// Init
+renderProductos();
+updateCartUI();
+
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MODAL DEL JOURNAL — aquí se leen los artículos completos
+     No necesitas tocar este bloque para agregar artículos nuevos
+════════════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="journalModal">
+  <button class="modal-close" onclick="closeArticle()">✕</button>
+  <div class="modal-article">
+    <div class="modal-concept" id="modalConcept"></div>
+    <h1 class="modal-title" id="modalTitle"></h1>
+    <div class="modal-meta" id="modalMeta"></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-signature">Luna Norte · Journal · Mérida, Yucatán</div>
+
+    <!-- SECCIÓN: CUENTA TU HISTORIA -->
+    <div class="historia-section">
+      <div class="historia-eyebrow">Comunidad</div>
+      <h2 class="historia-title">Cuéntanos tu historia.</h2>
+      <p class="historia-sub">
+        Este concepto te resonó por algo. Si quieres contarnos por qué —
+        un momento, una experiencia, algo que viviste — nos gustaría leerlo.
+        Las mejores historias las compartimos en el journal, con tu permiso.
+      </p>
+
+      <!-- Formulario de envío -->
+      <div class="historia-form" id="historiaForm">
+        <span class="historia-concepto-tag" id="historiaConcept"></span>
+
+        <div class="historia-field">
+          <label class="historia-label">Tu nombre (opcional)</label>
+          <input class="historia-input" type="text" id="historiaNombre"
+            placeholder="Como quieres que te llamemos..." />
+        </div>
+
+        <div class="historia-field">
+          <label class="historia-label">Tu correo</label>
+          <input class="historia-input" type="email" id="historiaCorreo"
+            placeholder="Para responderte si quieres..." />
+        </div>
+
+        <div class="historia-field">
+          <label class="historia-label">Tu historia</label>
+          <textarea class="historia-textarea" id="historiaTexto"
+            placeholder="No tiene que ser perfecta. Solo tiene que ser tuya..."></textarea>
+        </div>
+
+        <button class="historia-btn" onclick="enviarHistoria()">
+          Enviar mi historia →
+        </button>
+      </div>
+
+      <!-- Estado: enviado + pregunta de permiso -->
+      <div class="historia-enviado" id="historiaEnviado">
+        <p class="historia-enviado-title">Gracias. La leemos con cuidado.</p>
+        <p class="historia-enviado-sub">
+          Cada historia que nos llega se queda con nosotros.
+          Algunas las compartimos, otras nos recuerdan por qué hacemos esto.
+        </p>
+
+        <p class="permiso-pregunta">
+          ¿Nos das permiso de compartir tu historia en el journal de Luna Norte?<br>
+          <span style="font-size:0.75rem;color:var(--tierra)">
+            Si dices que sí, te avisamos antes de publicar. Siempre con tu nombre como tú quieras.
+          </span>
+        </p>
+
+        <div class="permiso-btns" id="permisoBtns">
+          <button class="permiso-btn si" onclick="responderPermiso(true)">
+            Sí, pueden usarla
+          </button>
+          <button class="permiso-btn no" onclick="responderPermiso(false)">
+            No por ahora, gracias
+          </button>
+        </div>
+
+        <p class="permiso-confirmado" id="permisoConfirmado"></p>
+      </div>
+    </div>
+
+    <div class="modal-nav">
+      <button class="modal-nav-btn" id="btnPrev" onclick="navArticle(-1)">← Anterior</button>
+      <button class="modal-nav-btn" id="btnNext" onclick="navArticle(1)">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL DE PRODUCTO
+══════════════════════════════════════════════════════ -->
+<div class="pmodal-overlay" id="pmodal">
+  <div class="pmodal-box">
+    <button class="pmodal-close" onclick="closePModal()">✕</button>
+
+    <!-- Galería -->
+    <div class="pmodal-gallery">
+      <div class="pmodal-main-img" id="pmodalMainImg"></div>
+      <div class="pmodal-thumbs" id="pmodalThumbs"></div>
+      <div class="pmodal-agotado-banner" id="pmodalAgotadoBanner" style="display:none">Agotado</div>
+    </div>
+
+    <!-- Info -->
+    <div class="pmodal-info">
+      <div class="pmodal-concepto" id="pmodalConcepto"></div>
+      <div class="pmodal-nombre" id="pmodalNombre"></div>
+      <div class="pmodal-precio" id="pmodalPrecio"></div>
+      <div class="pmodal-desc" id="pmodalDesc"></div>
+
+      <!-- Tallas -->
+      <div id="tallasSection">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem">
+          <div class="tallas-label">Talla</div>
+          <button class="guia-link" onclick="toggleGuia()">Guía de tallas</button>
+        </div>
+        <div class="tallas-grid" id="tallasGrid"></div>
+        <div class="guia-tabla" id="guiaTalla">
+          <table>
+            <thead>
+              <tr><th>Talla</th><th>Pecho (cm)</th><th>Largo (cm)</th><th>Hombro (cm)</th></tr>
+            </thead>
+            <tbody id="guiaBody"></tbody>
+          </table>
+          <p style="font-size:0.65rem;color:var(--tierra);margin-top:0.75rem">Medidas de la prenda, no del cuerpo. En caso de duda, sube una talla.</p>
+        </div>
+      </div>
+
+      <div id="pmodalTallaError" style="font-size:0.72rem;color:#c62828;display:none">Selecciona una talla para continuar.</div>
+      <button class="add-cart-btn" id="addCartBtn" onclick="addToCart()">Agregar al carrito</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     CARRITO LATERAL
+══════════════════════════════════════════════════════ -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <span class="cart-title">Tu carrito</span>
+    <button class="cart-close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount" id="cartTotal">$0 MXN</span>
+    </div>
+    <div class="checkout-btns">
+      <button class="checkout-btn checkout-wa" onclick="checkoutWA()">
+        <span>💬</span> Pedir por WhatsApp
+      </button>
+      <button class="checkout-btn checkout-mail" onclick="checkoutMail()">
+        <span>✉️</span> Pedir por correo
+      </button>
+    </div>
+    <p class="cart-note">Te contactamos para confirmar dirección y método de pago.</p>
+  </div>
+</div>
+
+<!-- Botón flotante del carrito -->
+<button class="cart-fab hidden" id="cartFab" onclick="toggleCart()">
+  🛍
+  <span class="cart-badge" id="cartBadge">0</span>
+</button>
+
+</body>
+</html>
