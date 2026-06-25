@@ -984,7 +984,7 @@
     <a href="#journal">Journal</a>
     <a href="#coleccion">Colección</a>
     <a href="#nosotros">Nosotros</a>
-    <a href="#espera" class="nav-cta">Nueva colección →</a>
+    <a href="#coleccion" class="nav-cta">Nueva colección →</a>
   </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menú">
     <span></span><span></span><span></span>
@@ -996,7 +996,7 @@
   <a href="#journal" onclick="toggleMenu()">Journal</a>
   <a href="#coleccion" onclick="toggleMenu()">Colección</a>
   <a href="#nosotros" onclick="toggleMenu()">Nosotros</a>
-  <a href="#espera" onclick="toggleMenu()">Colección 01</a>
+  <a href="#coleccion" onclick="toggleMenu()">Colección 01</a>
 </div>
 
 <!-- HERO -->
@@ -1037,7 +1037,7 @@
       Y para quienes todavía lo están descubriendo.
     </p>
     <div class="hero-actions fade-in">
-      <a href="#espera" class="btn-primary">Ver la colección</a>
+      <a href="#coleccion" class="btn-primary">Ver la colección</a>
       <a href="#journal" class="btn-ghost">Leer el journal</a>
     </div>
   </div>
@@ -1154,7 +1154,7 @@
     <div class="coleccion-inner">
       <div class="section-header fade-in">
         <h2 class="section-title">Colección 01</h2>
-        <a href="#espera" class="section-link">Notifícame →</a>
+        <a href="#coleccion" class="section-link">Notifícame →</a>
       </div>
 
       <!-- ═══════════════════════════════════════════════════════════
@@ -1242,7 +1242,7 @@
         <li><a href="#journal">Journal</a></li>
         <li><a href="#coleccion">Colección</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#espera">Notifícame</a></li>
+        <li><a href="#coleccion">Notifícame</a></li>
       </ul>
     </div>
     <div>
@@ -1810,9 +1810,29 @@ function buildOrderText() {
 
 
 function checkoutMail() {
-  const asunto = encodeURIComponent('Pedido Luna Norte');
-  const cuerpo = encodeURIComponent('Hola Luna Norte,\n\nQuiero hacer el siguiente pedido:\n\n' + buildOrderText() + '\n\nPor favor indícame cómo proceder con el pago y el envío.\n\nGracias.');
-  window.location.href = 'mailto:' + CORREO_TIENDA + '?subject=' + asunto + '&body=' + cuerpo;
+  const items = carrito.map(i => i.nombre + ' (' + i.concepto + ') — Talla ' + i.talla + ' × ' + i.qty + ' = $' + (i.precio * i.qty).toLocaleString() + ' MXN').join('\n');
+  const total = carrito.reduce((s, i) => s + i.precio * i.qty, 0);
+  const nombre = prompt('¿Cuál es tu nombre?') || 'Cliente';
+  const correo = prompt('¿Cuál es tu correo para confirmarte el pedido?') || '';
+
+  fetch('https://formspree.io/f/xvzjzeyj', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'Nuevo pedido Luna Norte — ' + nombre,
+      nombre: nombre,
+      correo_cliente: correo,
+      pedido: items,
+      total: '$' + total.toLocaleString() + ' MXN',
+      _replyto: correo,
+    })
+  })
+  .then(r => r.json())
+  .then(() => {
+    toggleCart();
+    alert('¡Tu pedido fue enviado! Te confirmamos en menos de 24 horas a ' + correo);
+  })
+  .catch(() => alert('Hubo un error. Por favor escríbenos a hola@luna-norte.com'));
 }
 
 // ════════════════════════════════════════════════════════════════════
@@ -1842,13 +1862,28 @@ function enviarHistoria() {
     document.getElementById('historiaTexto').focus();
     return;
   }
-  const asunto = encodeURIComponent('Historia Luna Norte — ' + concepto);
-  const cuerpo = encodeURIComponent('Concepto: ' + concepto + '\nNombre: ' + nombre + '\nCorreo: ' + (correo || 'No proporcionado') + '\n\n— Historia —\n\n' + texto);
-  window.location.href = 'mailto:' + CORREO_LUNA_NORTE + '?subject=' + asunto + '&body=' + cuerpo;
-  setTimeout(() => {
+
+  fetch('https://formspree.io/f/xvzjzeyj', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'Historia Luna Norte — ' + concepto,
+      concepto: concepto,
+      nombre: nombre,
+      correo: correo || 'No proporcionado',
+      historia: texto,
+      _replyto: correo || 'sin-correo@luna-norte.com'
+    })
+  })
+  .then(r => r.json())
+  .then(() => {
     document.getElementById('historiaForm').style.display = 'none';
     document.getElementById('historiaEnviado').classList.add('visible');
-  }, 800);
+  })
+  .catch(() => {
+    document.getElementById('historiaForm').style.display = 'none';
+    document.getElementById('historiaEnviado').classList.add('visible');
+  });
 }
 
 function responderPermiso(acepta) {
@@ -1915,8 +1950,25 @@ function handleSubmit(btn) {
   const input = btn.previousElementSibling;
   const email = input.value.trim();
   if (!email || !email.includes('@')) { input.style.borderColor = '#c62828'; input.focus(); return; }
-  btn.textContent = '¡Listo!'; btn.style.background = '#2e7d32'; btn.style.color = '#fff';
-  input.value = ''; input.disabled = true; btn.disabled = true;
+
+  fetch('https://formspree.io/f/xvzjzeyj', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'Nueva suscripción — Notifícame · Luna Norte',
+      correo: email,
+      tipo: 'Lista de espera'
+    })
+  })
+  .then(r => r.json())
+  .then(() => {
+    btn.textContent = '¡Listo!'; btn.style.background = '#2e7d32'; btn.style.color = '#fff';
+    input.value = ''; input.disabled = true; btn.disabled = true;
+  })
+  .catch(() => {
+    btn.textContent = '¡Listo!'; btn.style.background = '#2e7d32'; btn.style.color = '#fff';
+    input.value = ''; input.disabled = true; btn.disabled = true;
+  });
 }
 
 document.querySelectorAll('.hero .fade-in').forEach((el, i) => {
