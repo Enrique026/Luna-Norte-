@@ -1267,6 +1267,16 @@
 //  CONFIGURACIÓN — EDITOR: cambia estos valores
 // ════════════════════════════════════════════════════════════════════
 const CORREO_TIENDA  = "hola@luna-norte.com"; // ← Tu correo de pedidos
+const STRIPE_LINKS = {
+  1: 'https://buy.stripe.com/dRm28k9522Yo9F731X5sA07',
+  2: 'https://buy.stripe.com/dRmaEQ0ywdD2dVn8mh5sA06',
+  3: 'https://buy.stripe.com/dRm9AM80YaqQdVn6e95sA05',
+  4: 'https://buy.stripe.com/9B6fZa9528iI2cFdGB5sA04',
+  5: 'https://buy.stripe.com/6oU8wI5SQcyY2cF1XT5sA03',
+  6: 'https://buy.stripe.com/dRmfZa3KI2Yo3gJ7id5sA02',
+  7: 'https://buy.stripe.com/eVq28k3KIbuUeZr9ql5sA01',
+  8: 'https://buy.stripe.com/aFa14g3KI9mM18B5a55sA00',
+};
 // CORREO_LUNA_NORTE se usa también para las historias del journal
 
 // ════════════════════════════════════════════════════════════════════
@@ -1809,6 +1819,46 @@ function buildOrderText() {
 }
 
 
+function checkoutStripe() {
+  if (carrito.length === 0) return;
+  if (carrito.length === 1) {
+    const item = carrito[0];
+    const link = STRIPE_LINKS[item.id];
+    if (link) {
+      window.open(link, '_blank');
+      return;
+    }
+  }
+  // Multiple items - open each in sequence with a note
+  const nombre = prompt('¿Cuál es tu nombre?') || 'Cliente';
+  const correo = prompt('¿Cuál es tu correo para confirmarte el pedido?') || '';
+  // Send order by email first
+  fetch('https://formspree.io/f/xvzjzeyj', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'Nuevo pedido Luna Norte — ' + nombre,
+      nombre: nombre,
+      correo_cliente: correo,
+      pedido: carrito.map(i => i.nombre + ' (' + i.concepto + ') Talla ' + i.talla + ' × ' + i.qty).join(', '),
+      total: '$' + carrito.reduce((s,i) => s + i.precio * i.qty, 0).toLocaleString() + ' MXN',
+      _replyto: correo,
+    })
+  });
+  // Open Stripe links for each unique product
+  const seen = new Set();
+  carrito.forEach(item => {
+    if (!seen.has(item.id) && STRIPE_LINKS[item.id]) {
+      seen.add(item.id);
+      setTimeout(() => window.open(STRIPE_LINKS[item.id], '_blank'), seen.size * 800);
+    }
+  });
+  setTimeout(() => {
+    toggleCart();
+    alert('Se abrirán las páginas de pago de Stripe. Tu pedido también fue enviado a ' + (correo || 'hola@luna-norte.com'));
+  }, (seen.size + 1) * 800);
+}
+
 function checkoutMail() {
   const items = carrito.map(i => i.nombre + ' (' + i.concepto + ') — Talla ' + i.talla + ' × ' + i.qty + ' = $' + (i.precio * i.qty).toLocaleString() + ' MXN').join('\n');
   const total = carrito.reduce((s, i) => s + i.precio * i.qty, 0);
@@ -2130,6 +2180,9 @@ updateCartUI();
     </div>
     <div class="checkout-btns">
 
+      <button class="checkout-btn" onclick="checkoutStripe()" style="background:#0a0a0a;color:#d4a853;border:1px solid #d4a853;padding:0.85rem 1.5rem;font-size:0.75rem;letter-spacing:0.12em;cursor:pointer;width:100%;margin-bottom:0.5rem;font-weight:500;text-transform:uppercase;transition:all 0.2s;" onmouseover="this.style.background='#d4a853';this.style.color='#0a0a0a'" onmouseout="this.style.background='#0a0a0a';this.style.color='#d4a853'">
+        Pagar con Stripe →
+      </button>
       <button class="checkout-btn checkout-mail" onclick="checkoutMail()">
         <span>✉️</span> Pedir por correo
       </button>
