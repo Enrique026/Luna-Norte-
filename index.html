@@ -1859,11 +1859,21 @@ function checkoutStripe() {
   }, (seen.size + 1) * 800);
 }
 
-function checkoutMail() {
-  const items = carrito.map(i => i.nombre + ' (' + i.concepto + ') — Talla ' + i.talla + ' × ' + i.qty + ' = $' + (i.precio * i.qty).toLocaleString() + ' MXN').join('\n');
+function toggleMailForm() {
+  const form = document.getElementById('mailForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function enviarPedidoCorreo() {
+  const nombre = document.getElementById('mailNombre').value.trim() || 'Cliente';
+  const correo = document.getElementById('mailCorreo').value.trim();
+  if (!correo || !correo.includes('@')) {
+    document.getElementById('mailCorreo').style.borderColor = '#c62828';
+    document.getElementById('mailCorreo').focus();
+    return;
+  }
+  const items = carrito.map(i => i.nombre + ' (' + i.concepto + ') Talla ' + i.talla + ' x' + i.qty + ' = $' + (i.precio * i.qty).toLocaleString() + ' MXN').join(' | ');
   const total = carrito.reduce((s, i) => s + i.precio * i.qty, 0);
-  const nombre = prompt('¿Cuál es tu nombre?') || 'Cliente';
-  const correo = prompt('¿Cuál es tu correo para confirmarte el pedido?') || '';
 
   fetch('https://formspree.io/f/xvzjzeyj', {
     method: 'POST',
@@ -1879,11 +1889,18 @@ function checkoutMail() {
   })
   .then(r => r.json())
   .then(() => {
-    toggleCart();
-    alert('¡Tu pedido fue enviado! Te confirmamos en menos de 24 horas a ' + correo);
+    document.getElementById('mailConfirm').style.display = 'block';
+    document.getElementById('mailNombre').value = '';
+    document.getElementById('mailCorreo').value = '';
+    setTimeout(() => { toggleCart(); }, 2000);
   })
-  .catch(() => alert('Hubo un error. Por favor escríbenos a hola@luna-norte.com'));
+  .catch(() => {
+    document.getElementById('mailConfirm').textContent = 'Error al enviar. Escríbenos a hola@luna-norte.com';
+    document.getElementById('mailConfirm').style.display = 'block';
+  });
 }
+
+function checkoutMail() { toggleMailForm(); }
 
 // ════════════════════════════════════════════════════════════════════
 //  JOURNAL MODAL
@@ -2183,7 +2200,16 @@ updateCartUI();
       <button class="checkout-btn" onclick="checkoutStripe()" style="background:#0a0a0a;color:#d4a853;border:1px solid #d4a853;padding:0.85rem 1.5rem;font-size:0.75rem;letter-spacing:0.12em;cursor:pointer;width:100%;margin-bottom:0.5rem;font-weight:500;text-transform:uppercase;transition:all 0.2s;" onmouseover="this.style.background='#d4a853';this.style.color='#0a0a0a'" onmouseout="this.style.background='#0a0a0a';this.style.color='#d4a853'">
         Pagar con Stripe →
       </button>
-      <button class="checkout-btn checkout-mail" onclick="checkoutMail()">
+      <div id="mailForm" style="display:none;margin-top:0.5rem;border:0.5px solid #2e2a26;padding:1rem;background:#111;">
+        <div style="font-size:0.65rem;letter-spacing:0.14em;color:#d4a853;text-transform:uppercase;margin-bottom:0.75rem;">Datos para tu pedido</div>
+        <input id="mailNombre" type="text" placeholder="Tu nombre" style="width:100%;background:#0a0a0a;border:0.5px solid #2e2a26;color:#ccc;padding:0.6rem 0.75rem;font-size:0.8rem;margin-bottom:0.5rem;outline:none;font-family:inherit;" />
+        <input id="mailCorreo" type="email" placeholder="Tu correo" style="width:100%;background:#0a0a0a;border:0.5px solid #2e2a26;color:#ccc;padding:0.6rem 0.75rem;font-size:0.8rem;margin-bottom:0.75rem;outline:none;font-family:inherit;" />
+        <button onclick="enviarPedidoCorreo()" style="width:100%;background:#d4a853;color:#0a0a0a;border:none;padding:0.75rem;font-size:0.7rem;letter-spacing:0.12em;font-weight:500;text-transform:uppercase;cursor:pointer;font-family:inherit;">
+          Enviar pedido →
+        </button>
+        <div id="mailConfirm" style="display:none;font-size:0.75rem;color:#4a7a50;margin-top:0.5rem;text-align:center;">✓ Pedido enviado. Te confirmamos pronto.</div>
+      </div>
+      <button class="checkout-btn checkout-mail" onclick="toggleMailForm()">
         <span>✉️</span> Pedir por correo
       </button>
     </div>
