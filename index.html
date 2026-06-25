@@ -2200,18 +2200,7 @@ updateCartUI();
       <button class="checkout-btn" onclick="checkoutStripe()" style="background:#0a0a0a;color:#d4a853;border:1px solid #d4a853;padding:0.85rem 1.5rem;font-size:0.75rem;letter-spacing:0.12em;cursor:pointer;width:100%;margin-bottom:0.5rem;font-weight:500;text-transform:uppercase;transition:all 0.2s;" onmouseover="this.style.background='#d4a853';this.style.color='#0a0a0a'" onmouseout="this.style.background='#0a0a0a';this.style.color='#d4a853'">
         Pagar con Stripe →
       </button>
-      <div id="mailForm" style="display:none;margin-top:0.5rem;border:0.5px solid #2e2a26;padding:1rem;background:#111;">
-        <div style="font-size:0.65rem;letter-spacing:0.14em;color:#d4a853;text-transform:uppercase;margin-bottom:0.75rem;">Datos para tu pedido</div>
-        <input id="mailNombre" type="text" placeholder="Tu nombre" style="width:100%;background:#0a0a0a;border:0.5px solid #2e2a26;color:#ccc;padding:0.6rem 0.75rem;font-size:0.8rem;margin-bottom:0.5rem;outline:none;font-family:inherit;" />
-        <input id="mailCorreo" type="email" placeholder="Tu correo" style="width:100%;background:#0a0a0a;border:0.5px solid #2e2a26;color:#ccc;padding:0.6rem 0.75rem;font-size:0.8rem;margin-bottom:0.75rem;outline:none;font-family:inherit;" />
-        <button onclick="enviarPedidoCorreo()" style="width:100%;background:#d4a853;color:#0a0a0a;border:none;padding:0.75rem;font-size:0.7rem;letter-spacing:0.12em;font-weight:500;text-transform:uppercase;cursor:pointer;font-family:inherit;">
-          Enviar pedido →
-        </button>
-        <div id="mailConfirm" style="display:none;font-size:0.75rem;color:#4a7a50;margin-top:0.5rem;text-align:center;">✓ Pedido enviado. Te confirmamos pronto.</div>
-      </div>
-      <button class="checkout-btn checkout-mail" onclick="toggleMailForm()">
-        <span>✉️</span> Pedir por correo
-      </button>
+
     </div>
     <p class="cart-note">Te contactamos para confirmar dirección y método de pago.</p>
   </div>
